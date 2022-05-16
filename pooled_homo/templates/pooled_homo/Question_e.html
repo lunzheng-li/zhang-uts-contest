@@ -1,0 +1,35 @@
+{% extends "pooled_homo/css.html" %}
+{% load otree static %}
+
+
+{% block title %}
+    Quiz
+{% endblock %}
+
+{% block content %}
+    {% for d in fields %}
+        <!-- {% formfield d.name %} -->
+        <p class="justify">5. Suppose you purchase 60 lottery tickets and the three other
+        participants in your group purchase a combined total of 40 lottery tickets.
+        What is your probability of receiving the reward in percentage terms? 
+        (Please refer to formula 3)</p>
+        <span><input name='e' type="number" /> %</span>
+        {% if form.e.errors %}{{ form.e.errors.0 }}{% endif %}
+        {% if show_solutions %}
+            {% if d.is_correct %}
+                <p class="solution-correct">
+                    Correct.
+                </p>
+            {% else %}
+                <p class="solution-incorrect">
+                    {{ d.explanation }}
+                </p>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+        <br><br>
+    {% next_button %}
+        <br><br>
+    {% include Constants.instructions_template %}
+    
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block app_styles %}
+
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            font-weight:normal;
+            text-align: center; 
+        }
+        th {
+            font-weight: bolder;
+        }
+        table {
+            table-layout: auto;
+            width:80%;
+            margin: auto;
+        }
+        ul {
+            list-style-position: inside;
+        }
+        img {
+          border: 1px solid #555;
+        }
+        .center{
+            text-align: center;
+        }
+        .justify{
+            text-align: justify;
+        }
+        .stage{
+            text-align: center;
+            font-weight: bolder;
+/*            color: blue;*/
+        }
+        .Blue{
+            font-weight: bolder;
+            color: blue;
+        }
+        .Red{
+            font-weight: bolder;
+            color: red;
+        }
+        .notes{
+            font-size: 10pt;
+            text-align: justify;
+            font-weight: bolder;
+        }
+        .notes_center{
+            font-size: 10pt;
+            text-align: center;
+            font-weight: bolder;
+        }
+        #round_numbers{
+            text-align: center;
+            font-size: 15pt;
+            text-decoration: underline;
+        }
+
+    </style>
+
+{% endblock %}

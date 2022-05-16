@@ -1,0 +1,46 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block app_styles %}
+
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            font-weight:normal;
+            text-align: center; 
+        }
+        th {
+            font-weight: bolder;
+        }
+        table {
+            table-layout: auto;
+            width:80%;
+            margin: auto;
+        }
+        ul {
+            list-style-position: inside;
+        }
+        img {
+          border: 1px solid #555;
+        }
+        .center{
+            text-align: center;
+        }
+        .justify{
+            text-align: justify;
+        }
+        .stage{
+            text-align: center;
+            font-weight: bolder;
+            color: blue;
+        }
+        #round_numbers{
+            text-align: center;
+            font-size: 15pt;
+            text-decoration: underline;
+        }
+
+    </style>
+
+{% endblock %}

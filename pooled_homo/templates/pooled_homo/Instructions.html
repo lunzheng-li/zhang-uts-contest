@@ -1,0 +1,19 @@
+{% extends "pooled_homo/css.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+    {% include Constants.instructions_template %}
+    <br>
+    </p class="justify">
+        If you have any questions at this time, please message one of the experimenters using the chat function in Zoom. If there are no questions, please go ahead and complete a quiz.
+    </p> 
+    <p>
+    <b>Note that the instructions will remain on your screen for future reference.</b>
+    </p>
+    {% next_button %}
+
+{% endblock %}

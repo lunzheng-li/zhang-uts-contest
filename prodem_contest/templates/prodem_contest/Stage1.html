@@ -1,0 +1,70 @@
+{% extends "prodem_contest/css.html" %}
+{% load otree static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+{% if subsession.round_number > Constants.num_trial_rounds %}
+<p id="round_numbers">Period {{ subsession.real_round_number}} of {{ Constants.num_real_rounds}}</p>
+{% else %}
+<p id="round_numbers"> This is a trial period</p>
+{% endif %}
+
+<p class="stage">Stage 1</p>
+<br>
+<p class="center">
+    You are <b>type {{ player.typo }}</b>, and you will receive <b>{{ player.tpp }} tickets</b> for every point you spend. <br>
+    You are randomly placed into a 
+    {% if player.round_number > 1 %} <b>new</b> {% endif %}
+    group of {{ Constants.players_per_group}}. You are Player {{ player.id_in_group }} in this group. <br>
+    You are in the <span class={{ player.division1 }}>{{ player.division1 }}</span> division. <br>
+    The types of players in your division are as follows:
+</p>
+<table>
+    <tr>
+        <th>Player</th>
+        <th>Division</th>
+        <th>Type</th>
+        <th>Tickets per point</th>
+    </tr>
+    <tr>
+        <td>{{ player.id_in_group }} <br> (Your ID)</td>
+        <td><span class={{ player.division1 }}>{{ player.division1 }}</span></td>
+        <td>{{ player.typo }}</td>
+        <td>{{ player.tpp }}</td>
+    </tr>
+    <tr>
+        <td>{{ other_id }}</td>
+        <td><span class={{ player.division1 }}>{{ player.division1 }}</span></td>
+        <td>{{ player.typo }}</td>
+        <td>{{ player.tpp }}</td>
+    </tr>
+</table>
+<br>
+
+<p class="center">
+    You are endowed with {{ subsession.endowment }} points. <br>
+    {% if player.division1 == 'Red' %}
+        The reward is worth <span class={{ player.division1 }}>{{ Constants.reward_red }}</span> points.
+    {% else %}
+        The reward is worth <span class={{ player.division1 }}>{{ Constants.reward_blue }}</span> points.
+    {% endif %}
+</p>
+
+<p class="center">
+    You may spend <u>any multiple of 0.5</u> points between 0 and 100 to purchase tickets.
+</p>
+
+<center>
+    {% formfields %}
+</center>
+
+    {% next_button %}
+    <br>
+
+    {% include Constants.instructions_template %}
+
+{% endblock %}
+

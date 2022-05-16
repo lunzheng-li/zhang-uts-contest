@@ -1,0 +1,72 @@
+{% extends "pooled_homo/css.html" %}
+{% load otree static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+{% if subsession.round_number > Constants.num_trial_rounds %}
+<p id="round_numbers">Period {{ subsession.real_round_number}} of {{ Constants.num_real_rounds}}</p>
+{% else %}
+<p id="round_numbers"> This is a trial period</p>
+{% endif %}
+<p class="stage">Stage 2</p>
+<br>
+<p class="center">
+    You will receive <b>{{ player.tpp }} tickets</b> for every point you spend. <br>
+    You remain in the same group. You are Player {{ player.id_in_group }} in this group.<br> The other players in your group are as follows:
+</p>
+<table id="types">
+    <tr>
+        <th>Player</th>
+        <th>Tickets per point</th>
+    </tr>
+</table>
+<br>
+<p class="center">
+    You are endowed with {{ endowment }} points. <br>
+    The reward is worth {{ Constants.reward }} points.
+</p>
+
+<p class="center">
+    You may spend <u>any multiple of 0.5</u> points between 0 and 100 to purchase tickets.
+</p>
+
+<center>
+    {% formfields %}
+</center>
+
+
+    {% next_button %}
+    <br>
+
+    {% include Constants.instructions_template %}
+
+<script>
+    var idLst=js_vars.id_lst;
+    var typo2Lst=js_vars.typo2_lst;
+    var tpp2Lst=js_vars.tpp2_lst;
+    var yourId = js_vars.your_id;
+
+    for (var i = 3; i >-1; i--){
+        var table = document.getElementById("types");
+        var row = table.insertRow(1);
+        var cell0 = row.insertCell(0);
+        // var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(1);
+
+        if (idLst[i] == yourId){
+            cell0.innerHTML = idLst[i] + '<br>' + '(Your ID)';
+        }
+        else {
+            cell0.innerHTML = idLst[i];
+        }
+        // cell1.innerHTML = typo2Lst[i];
+        cell2.innerHTML = tpp2Lst[i];
+    }
+
+
+</script>
+{% endblock %}
+

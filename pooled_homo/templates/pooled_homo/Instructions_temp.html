@@ -1,0 +1,137 @@
+{% load otree %}
+
+<div class="card bg-light">
+    <div class="card-body">
+        <h5>General Instructions</h5>
+        <p class="justify">
+            This is an experiment in the economics of strategic decision-making. If you follow the instructions closely and make appropriate decisions, you can earn a considerable amount of money. You will be required to make a series of economic choices, which determine your total earnings. The currency used in the experiment is Points. Points will be converted to AUD at a rate of <b>{{ exchange_rate }} Points to 1 AUD</b>. Earnings are private. You will also receive a $8.00 participation fee. You will be asked to submit your PayID at the end of the experiment to receive the online transfer of your earnings. <b>{{ num_of_participant }}</b> participants are in today’s experiment. <br><br>
+            If you have a question, please type it in the Zoom chatbox and send it to the experimenter who will answer it.
+        </p>
+
+        <h5>Your Decision</h5>
+        <p class="justify">
+            The next part of the experiment consists of <u>{{ Constants.num_rounds }} decision-making periods (including {{ Constants.num_trial_rounds }} trial period and {{ Constants.num_real_rounds }} real periods) and each period consists of two stages</u>. At the beginning of <b>each</b> period, you will be randomly and anonymously placed into a group of <b>four</b> participants. Participants who have been grouped together will play against one another in each stage of the game. 
+            <br><br>
+            In each stage, participants will be given <b>an initial endowment of {{ endowment }} Points</b>. This endowment is not transferable across stages. You will use this endowment to purchase lottery tickets for a chance of receiving a reward in each stage. <b>The reward is equal to {{ Constants.reward }} Points</b>. In both stages of the game participants receive <b>10 tickets</b> for every Point they spend.  Participants may spend any number of Points <u>between 0 and {{ endowment }}</u> (including 0.5 decimal points). 
+            <br><br>
+            An example of the decision screen in stage 1 is as follows: 
+                <center>
+                    <figure>
+                        {% if tpp_A == 20 %}
+                            <img src="{% static 'zhang_uts/Stage1.png' %}" width="80%" alt="Ooops！！！There is an error">
+                        {% else %}
+                            <img src="{% static 'zhang_uts/Stage1_homo.png' %}" width="80%" alt="Ooops！！！There is an error">
+                        {% endif %}
+                        <figcaption>Fig.1 - Sample "Stage 1" screen</figcaption>
+                    </figure>
+                </center>
+            <br>
+            <b><i><u>After you have played the game in stage 1 you will play the same game with the same participants in stage 2</u></i></b>. 
+        </p>
+
+        <h5>Your Earnings</h5>
+        <p class="justify">
+            Your earnings depending on whether you received the reward are as follows:
+            <ul>
+                <li>If you <b>did</b> receive the reward:
+                    Earnings = Endowment (100) + Reward (100) – Points you spent in that stage <b>(formula 1)</b>
+                </li>
+                <li>If you <b>did not</b> receive the reward:
+                    Earnings = Endowment (100) – Points you spent in that stage <b>(formula 2)</b>
+                </li>
+            </ul>
+        </p>
+        <p class="justify">
+            The more you spend on lottery tickets, the more likely you are to receive the reward. The more the other participants spend on lottery tickets, the less likely you are to receive the reward. At the end of a stage the computer <b>randomly draws</b> one ticket among all the tickets purchased by you and the other participants in your group. The owner of the ticket drawn receives a reward in that stage. Thus, your chance of receiving the reward is given by the number of lottery tickets you purchased divided by the total number of lottery tickets you and the other participants in your group purchased. 
+        </p>
+    <!-- 
+            $$\text{Prob. of reward} = \frac{\text{Number of tickets you purchased}}{\text{Total number of tickets purchased in your group}} \times 100\%$$ -->
+            <center>
+                <figure>
+                    <img src="{% static 'zhang_uts/equ.png' %}" width="70%" alt="Ooops！！！There is an error">
+                     <figcaption><b>formula 3</b></figcaption>
+                </figure>
+            </center>
+        <p class="justify">
+            In case all participants within a group purchase zero lottery tickets in a stage, the computer randomly chooses one participant to receive the reward in that stage.
+        </p>
+
+        <h5>Example of random draw</h5>
+        <p class="justify">
+            This is a hypothetical example of how the computer makes a random draw. Suppose in stage 1, we have the following:
+        <center>
+            <figure>
+                {% if tpp_A == 20 %}
+                    <img src="{% static 'zhang_uts/Stage1outcome.png' %}" width="80%" alt="Ooops！！！There is an error">
+                {% else %}
+                    <img src="{% static 'zhang_uts/Stage1outcome_homo.png' %}" width="80%" alt="Ooops！！！There is an error">
+                {% endif %}
+                <figcaption>Fig.2 - Sample "Stage 1 Outcome" screen</figcaption>
+            </figure>
+        </center>
+<!--             <table>
+                <tr>
+                    <th>Player</th>
+                    <th>Type</th>
+                    <th>Number of points spent</th>
+                    <th>Number of tickets purchased</th>
+                    <th>Total number of tickets purchased in group</th>
+                    <th>Prob. of reward %</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>A</td>
+                    <td>15</td>
+                    <td>{{ tab_tickets1 }}</td>
+                    <td>{{ tab_tickets_total }}</td>
+                    <td>{{ tab_prob1 }}</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>A</td>
+                    <td>5</td>
+                    <td>{{ tab_tickets2 }}</td>
+                    <td>{{ tab_tickets_total }}</td>
+                    <td>{{ tab_prob2 }}</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>B</td>
+                    <td>4</td>
+                    <td>{{ tab_tickets3 }}</td>
+                    <td>{{ tab_tickets_total }}</td>
+                    <td>{{ tab_prob3 }}</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>B</td>
+                    <td>4</td>
+                    <td>{{ tab_tickets4 }}</td>
+                    <td>{{ tab_tickets_total }}</td>
+                    <td>{{ tab_prob4 }}</td>
+                </tr>
+            </table> -->
+        </p>
+        <p class="justify">
+            The computer randomly draws <b>one lottery ticket out of {{ tab_tickets_total }}</b> ({{ tab_tickets1 }} lottery tickets for player 1, {{ tab_tickets2 }} lottery tickets for player 2, {{ tab_tickets3 }} lottery tickets for player 3 and {{ tab_tickets4 }} lottery tickets for player 4). <br>
+            As you can see, 
+            player 1 has a higher chance of receiving the reward: \({{ tab_prob1_100 }}\% = ({{ tab_tickets1 }}/{{ tab_tickets_total }})\times 100\% \).
+            Player 2 has a \({{ tab_prob2_100 }}\% = ({{ tab_tickets2 }}/{{ tab_tickets_total }})\times 100\%\) chance of receiving the reward. 
+            Player 3 and player 4’s chance of receiving the reward is \({{ tab_prob3_100 }}\% = ({{ tab_tickets4 }}/{{ tab_tickets_total }})\times 100\%\).
+        </p>
+        <p class="justify">
+            At the end of each stage, your expenditure on lottery tickets, the other participants’ expenditure on lottery tickets, whether you received the reward or not, and the earnings for the stage are reported on the outcome screen.
+        </p>
+
+        <p class="justify">
+            After you have completed both stages of the game the computer will calculate and report your total earnings for the period on your screen. Your total earnings for a period are equal to the sum of your earnings across stages 1 and 2. 
+        </p>
+
+        <h5>Important Notes</h5>
+        <p class="justify">
+            You will not be told which of the participants in this room are assigned to which group. At the beginning of each period you will be randomly re-grouped with 3 other participants to form a four-person group. You can never guarantee yourself the reward. However, by increasing your expenditure on lottery tickets, you can increase your chance of receiving the reward in each stage. At the end of the experiment we will randomly choose <b>1 of the {{ Constants.num_real_rounds }} real periods</b> for actual payment. Your earnings will be converted and paid out in AUD.
+        </p>
+    </div>
+</div>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>

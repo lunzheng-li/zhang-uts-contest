@@ -1,0 +1,138 @@
+{% load otree %}
+
+<div class="card bg-light">
+    <div class="card-body">
+        <h5>General Instructions</h5>
+        <p class="justify">
+            This is an experiment in the economics of strategic decision-making. If you follow the instructions closely and make appropriate decisions, you can earn a considerable amount of money. You will be required to make a series of economic choices, which determine your total earnings. The currency used in the experiment is Points. Points will be converted to AUD at a rate of <b>{{ exchange_rate }} Points to 1 AUD</b>. Earnings are private. You will also receive a $8.00 participation fee. You will be asked to submit your PayID at the end of the experiment to receive the online transfer of your earnings. <b>{{ num_of_participant }}</b> participants are in today’s experiment. <br><br>
+            If you have a question, please type it in the Zoom chatbox and send it to the experimenter who will answer it.
+        </p>
+
+        <h5>Your Decision</h5>
+        <p class="justify">
+            The next part of the experiment consists of <u>{{ Constants.num_rounds }} decision-making periods (including {{ Constants.num_trial_rounds }} trial period and {{ Constants.num_real_rounds }} real periods) and each period consists of <b>two stages</b></u>. First, the computer will randomly determine whether you are going to be <b><i>type A</i></b> or <b><i>type B</i></b>. Once your type has been determined you will remain that type for the duration of the experiment. At the beginning of <b>each</b> period, you will be randomly and anonymously placed into a group of <b>four</b> participants. Each group will consist of two <b><i>type A</i></b> and two <b><i>type B</i></b> participants. In <b>stage 1</b> type A participants will be placed in the <span class="Blue">Blue division</span> and type B participants will be placed in the <span class="Red">Red division</span>. Participants who have been grouped together will play with one another within each division in each stage of the game. 
+            <br><br>
+            In each stage, participants will be given <b>an initial endowment of {{ endowment }} Points</b>. This endowment is <u>not</u> transferable across stages. You will use this endowment to purchase lottery tickets for a chance of receiving a reward in each stage. The reward in the <b>Blue division</b> is equal to <b>{{ Constants.reward_blue }} Points</b> and the reward in the <b>Red division</b> is equal to <b>{{ Constants.reward_red }} Points</b>. We will explain the consequence of receiving the reward in the Red division later.
+            <br><br>
+            In both stages of the game <b><i>type A</i></b> participants receive <b>{{ tpp_A }} tickets</b> for every Point they spend, and <b><i>type B</i></b> participants receive <b>{{ tpp_B }} tickets</b> for every Point they spend. Participants may spend any number of Points <u>between 0 and {{ endowment }}</u> (including 0.5 decimal points). 
+        </p>
+        <h5>Stage 1</h5>
+        An example of the decision screen for participants placed in the <b>Blue division in Stage 1</b> is as follows：
+            <center>
+                <figure>
+                    {% if tpp_A == 20 %}
+                        <img src="{% static 'zhang_uts/Stage1_prodem.png' %}" width="80%" alt="Ooops！！！There is an error">
+                    {% else %}
+                        <img src="{% static 'zhang_uts/Stage1_homo.png' %}" width="80%" alt="Ooops！！！There is an error">
+                    {% endif %}
+                    <figcaption>Fig.1 - Sample "Stage 1" screen (Blue division)</figcaption>
+                </figure>
+            </center>
+
+
+        <h5>Your Earnings in Stage 1</h5>
+        <p class="justify">
+            Your earnings depending on whether you received the reward are as follows:
+            <ul>
+                <li>If you were in the <span class="Blue">Blue division</span> and you <b>did</b> receive the reward: Earnings = Endowment (100) + Reward (<span class="Blue">100</span>) – Points you spent in that stage (<b>formula 1</b>)</li>
+                <li>If you were in the <span class="Red">Red division</span> and you <b>did</b> receive the reward: Earnings = Endowment (100) + Reward (<span class="Red">0</span>) – Points you spent in that stage (<b>formula 2</b>)</li>
+                <li>If you <b>did not</b> receive the reward: Earnings = Endowment (100) – Points you spent in that stage (<b>formula 3</b>) </li>
+            </ul>
+        </p>
+        <p class="justify">
+            The more you spend on lottery tickets, the more likely you are to receive the reward. The more the other participant in your division spends on lottery tickets, the less likely you are to receive the reward. At the end of a stage the computer <b>randomly draws</b> one ticket among the tickets purchased by <b>you and the other participant in your division</b>. The owners of the tickets drawn in each division receive a reward in that stage. Thus, your chance of receiving the reward is given by the number of lottery tickets you purchased divided by the total number of lottery tickets you and the other participant in your division purchased.
+        </p>
+    <!-- 
+            $$\text{Prob. of reward} = \frac{\text{Number of tickets you purchased}}{\text{Total number of tickets purchased in your group}} \times 100\%$$ -->
+            <center>
+                <figure>
+                    <img src="{% static 'zhang_uts/equ_prodem.png' %}" width="70%" alt="Ooops！！！There is an error">
+                     <figcaption><b>formula 4</b></figcaption>
+                </figure>
+            </center>
+        <p class="justify">
+            In case all participants within a division purchase zero lottery tickets in a stage, the computer randomly chooses one participant in each division to receive the reward in that stage. 
+        </p>
+
+        <h5>Stage 2</h5>
+        <p class="justify">
+            The decision you face in stage 2 is very similar to that of stage 1, however, this time participants will move across divisions to play for different rewards depending on the outcome of the Stage 1 game.
+        </p>
+        <h5>Moving across divisions</h5>
+        <p class="justify">
+            The participants who receive the reward in either the Blue or Red division in stage 1 will be placed in the Blue division in stage 2. The participants who do not receive the reward in either the Blue or Red division in stage 1 will be placed in the Red division in stage 2 as shown in the diagram below.
+        </p>
+        <table>
+            <tr>
+                <th></th>
+                <th><span class="Blue">Blue division (Reward: 100 points)</span></th>
+                <th><span class="Red">Red division (Reward: 0 points)</span></th>
+            </tr>
+            <tr>
+                <td><b>Stage 1</b></td>
+                <td><b>A A*</b></td>
+                <td><b>B B*</b></td>
+            </tr>
+            <tr>
+                <td><b>Stage 2</b></td>
+                <td><b>A* B*</b></td>
+                <td><b>A B</b></td>
+            </tr>
+        </table>
+        <p class="notes_center">
+            A*, B* are reward recipients in each division in Stage 1. They play in the Blue division in Stage 2. <br> A, B did not receive rewards in Stage 1. They play in the Red division in Stage 2.
+        </p>
+        <p>
+            Note, everyone gets to play with a different type in stage 2. 
+        </p>
+        <p class="justify">
+            This is a hypothetical example of how the computer makes a random draw to decide who gets the reward in Stage 1. Suppose in stage 1, we have the following:
+        <center>
+            <figure>
+                {% if tpp_A == 20 %}
+                    <img src="{% static 'zhang_uts/Stage1outcome_prodem.png' %}" width="80%" alt="Ooops！！！There is an error">
+                {% else %}
+                    <img src="{% static 'zhang_uts/Stage1outcome_homo.png' %}" width="80%" alt="Ooops！！！There is an error">
+                {% endif %}
+                <figcaption>Fig.2 - Sample "Stage 1 Outcome" screen</figcaption>
+            </figure>
+        </center>
+        </p>
+        <p class="justify">
+            For the Blue division, the computer randomly draws <b>one lottery ticket out of {{ tab_tickets_total_blue }}</b> ({{ tab_tickets1 }} lottery tickets for player 1 and {{ tab_tickets2 }} lottery tickets for player 2). As you can see, player 1 has a <b>higher chance</b> of receiving the reward: \({{ tab_prob1_100 }}\% = ({{ tab_tickets1 }}/{{ tab_tickets_total_blue }})\times 100\% \). Whereas player 2 has a \({{ tab_prob2_100 }}\% = ({{ tab_tickets2 }}/{{ tab_tickets_total_blue }})\times 100\%\) chance of receiving the reward. Suppose player 2’s ticket was drawn and, as a result, they received the reward of 100 points, hence, they will remain in the Blue division in stage 2 and player 1 will be moved to the Red division in stage 2. <br><br>
+            For the Red division, the computer randomly draws <b>one lottery ticket out of 80</b> (40 lottery tickets for both players 3 and 4). Hence, both player 3 and player 4 have a \({{ tab_prob3_100 }}\% = ({{ tab_tickets4 }}/{{ tab_tickets_total_red }})\times 100\%\) chance of receiving the reward. Suppose player 4’s ticket was drawn and, as a result, they received the reward of 0 points in the Red division in stage 1. Hence, player 4 will be moved to the Blue division in stage 2 and player 3 will remain in the Red division in stage 2. 
+        </p>
+        <p class="justify">
+            As a result, player 1 and player 3 will play against each other in the Red division whereas player 2 and player 4 will play against each other in the Blue division in Stage 2. The decision screen of player 1 in stage 2 will look like this:
+            <center>
+                <figure>
+                    {% if tpp_A == 20 %}
+                        <img src="{% static 'zhang_uts/Stage2_prodem.png' %}" width="80%" alt="Ooops！！！There is an error">
+                    {% else %}
+                        <img src="{% static 'zhang_uts/Stage2_homo.png' %}" width="80%" alt="Ooops！！！There is an error">
+                    {% endif %}
+                    <figcaption>
+                        <span class="notes">Notice that player 1 can purchase 20 tickets/Point they spend <br>while player 3 can only purchase 10 tickets/Point spent. </span><br>
+                        Fig.3 - Sample "Stage 2" screen 
+                    </figcaption>
+                </figure>
+            </center>
+        </p>
+        <p class="justify">
+            At the end of each stage, your expenditure on lottery tickets, the other participants’ expenditure on lottery tickets, whether you received the reward or not, and the earnings for the stage are reported on the outcome screen.
+        </p>
+
+        <p class="justify">
+            After you have completed both stages of the game the computer will calculate and report your total earnings for the period on your screen. Your total earnings for a period are equal to the sum of your earnings across stages 1 and 2. 
+        </p>
+
+        <h5>Important Notes</h5>
+        <p class="justify">
+            You will not be told which of the participants in this room are assigned to which group. At the beginning of each period you will be randomly re-grouped with 3 other participants to form a four-person group. You can never guarantee yourself the reward. However, by increasing your expenditure on lottery tickets, you can increase your chance of receiving the reward in each stage. After stage 1 has been completed the reward recipients in each division will be placed in the Blue division in stage 2, while the participants who do not receive the reward in either division will be placed in the Red division in stage 2.
+            <br><br>
+            At the end of the experiment we will randomly choose <b>1 of the {{ Constants.num_real_rounds }} real periods</b> for actual payment. Your earnings will be converted and paid out in AUD.
+        </p>
+    </div>
+</div>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>

@@ -1,0 +1,213 @@
+{% extends "prodem_contest/css.html" %}
+{% load otree static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+{% if subsession.round_number > Constants.num_trial_rounds %}
+<p id="round_numbers">Period {{ subsession.real_round_number}} of {{ Constants.num_real_rounds}}</p>
+{% else %}
+<p id="round_numbers"> This is a trial period</p>
+{% endif %}
+<p class="stage">Outcome of Stage 2</p><br>
+
+<table id="spending">
+    <tr>
+        <th>Player</th>
+        <th>Type</th>
+        <th>Division</th>
+        <th>No. of points spent</th>
+        <th>No. of tickets</th>
+        <th>Total no. of tickets in division</th>
+        <th>Prob. of reward</th>
+    </tr>
+</table>
+<br>
+{% if player.division2 == 'Red' %}
+    {% if group.total_tickets2_red == 0 %}
+        <p class="center"> <b>No one purchased any tickets in your division </b>. <br>
+        Therefore, the computer <b>randomly</b> selected one player to receive the reward. <br><br>
+        {% if player.is_winner2_red == 'Yes' %}
+            <u>You are selected and will get the reward</u>. <br><br>
+            Your Stage 2 earnings = Endowment ({{ endowment }}) + Reward ({{ Constants.reward_red }})– Points spent ({{ player.spend2 }}) = <b>{{ player.payoff2 }} points</b>.
+        {% else %}
+            <u>You are not selected and will not get the reward</u>. <br><br>
+            Your Stage 2 earnings = Endowment ({{ endowment }}) – Points spent ({{ player.spend2 }}) = <b>{{ player.payoff2 }} points</b>.
+        {% endif %}
+        <br>
+        {% next_button %}
+    {% else %}
+        <p class="center">
+            You are in the <span class={{ player.division2 }}>{{ player.division2 }}</span> division. <br>
+            The computer randomly draws a number between 1 and {{ total_int_red }} to determine the winner in your division. 
+        </p>
+        <ul class="center">
+            <li id="player1"></li>
+            <li id="player2"></li>
+        </ul>
+
+        <!--     If the number is between 1 and <span id="player1"></span>, Player 1 wins; <br>
+            If the number is between <span id="player1Plus"></span> and <span id="player2"></span>, Player 2 wins, and so on.  -->
+
+        <div class="center">
+            <button type="button", onclick="showPayoff()">Click to get the random number</button>
+        </div>
+
+
+        <div id="earning">
+            <p class="center">
+                <br>
+                The random number is {{ group.winner_ticket_num2_red }},<br>
+                {% if player.is_winner2_red == 'Yes' %}
+                    Therefore, <u>you are the winner and will get the reward</u>. <br><br>
+                    Your Stage 2 earnings = Endowment ({{ endowment }}) + Reward ({{ Constants.reward_red }})– Points spent ({{ player.spend2 }}) = <b>{{ player.payoff2 }} points</b>.
+                {% else %}
+                    Therefore, <u>you are not the winner and will not get the reward</u>. <br><br>
+                    Your Stage 2 earnings = Endowment ({{ endowment }}) – Points spent ({{ player.spend2 }}) = <b>{{ player.payoff2 }} points</b>.
+                {% endif %}
+                <br>
+                Recall that Your Stage 1 earnings are: {{ player.payoff1 }} points. <br>
+                Therefore, your total earnings over both stages are: <b>{{ player.payoff_twostages }} points</b>.
+            </p>
+            <br><br>
+
+            {% next_button %}
+        </div>
+    {% endif %}
+{% else %}
+    {% if group.total_tickets2_blue == 0 %}
+        <p class="center"> <b>No one purchased any tickets in your division </b>. <br>
+        Therefore, the computer <b>randomly</b> selected one player to receive the reward. <br><br>
+        {% if player.is_winner2_blue == 'Yes' %}
+            <u>You are selected and will get the reward</u>. <br><br>
+            Your Stage 2 earnings = Endowment ({{ endowment }}) + Reward ({{ Constants.reward_blue }})– Points spent ({{ player.spend2 }}) = <b>{{ player.payoff2 }} points</b>.
+        {% else %}
+            <u>You are not selected and will not get the reward</u>. <br><br>
+            Your Stage 2 earnings = Endowment ({{ endowment }}) – Points spent ({{ player.spend2 }}) = <b>{{ player.payoff2 }} points</b>.
+        {% endif %}
+        <br>
+        {% next_button %}
+    {% else %}
+        <p class="center">
+            You are in the <span class={{ player.division2 }}>{{ player.division2 }}</span> division. <br>
+            The computer randomly draws a number between 1 and {{ total_int_blue }} to determine the winner in your division. 
+        </p>
+        <ul class="center">
+            <li id="player1"></li>
+            <li id="player2"></li>
+        </ul>
+
+        <!--     If the number is between 1 and <span id="player1"></span>, Player 1 wins; <br>
+            If the number is between <span id="player1Plus"></span> and <span id="player2"></span>, Player 2 wins, and so on.  -->
+
+        <div class="center">
+            <button type="button", onclick="showPayoff()">Click to get the random number</button>
+        </div>
+
+
+        <div id="earning">
+            <p class="center">
+                <br>
+                The random number is {{ group.winner_ticket_num2_blue }},<br>
+                {% if player.is_winner2_blue == 'Yes' %}
+                    Therefore, <u>you are the winner and will get the reward</u>. <br><br>
+                    Your Stage 2 earnings = Endowment ({{ endowment }}) + Reward ({{ Constants.reward_blue }})– Points spent ({{ player.spend2 }}) = <b>{{ player.payoff2 }} points</b>.
+                {% else %}
+                    Therefore, <u>you are not the winner and will not get the reward</u>. <br><br>
+                    Your Stage 2 earnings = Endowment ({{ endowment }}) – Points spent ({{ player.spend2 }}) = <b>{{ player.payoff2 }} points</b>.
+                {% endif %}
+                <br>
+                Recall that Your Stage 1 earnings are: {{ player.payoff1 }} points. <br>
+                Therefore, your total earnings over both stages are: <b>{{ player.payoff_twostages }} points</b>.
+            </p>
+            <br><br>
+
+            {% next_button %}
+        </div>
+    {% endif %}
+{% endif %}
+    <br><br>
+
+    {% include Constants.instructions_template %}
+
+<script>
+    var idLst=js_vars.id_lst;
+    var spend2Lst=js_vars.spend2_lst;
+    var typo2Lst=js_vars.typo2_lst;
+    var tickets2Lst=js_vars.tickets2_lst;
+    var totalTickets=js_vars.total_tickets;
+    var prob2Lst=js_vars.prob2_lst;
+    var yourId = js_vars.your_id;
+
+    var division2Lst=js_vars.division2_lst;
+    var ticketsRedSorted=js_vars.tickets_red_sorted;
+    var redPlus = ticketsRedSorted[0]+1;
+    var idRedSorted=js_vars.id_red_sorted;
+    var ticketsBlueSorted=js_vars.tickets_blue_sorted;
+    var idBlueSorted=js_vars.id_blue_sorted;
+    var bluePlus = ticketsBlueSorted[0]+1;
+    var idIndex = idRedSorted.slice().reverse().concat(idBlueSorted.slice().reverse()).map(function(value){return value-1;});
+
+
+    for (i of idIndex){
+        var table = document.getElementById("spending");
+        var row = table.insertRow(1);
+        var cell0 = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(2);
+        var cell3 = row.insertCell(3);
+        var cell4 = row.insertCell(4);
+        var cell5 = row.insertCell(5);
+        var cell6 = row.insertCell(6);
+        if (idLst[i] == yourId){
+            cell0.innerHTML = idLst[i] + '<br>' + '(Your ID)';
+        }
+        else {
+            cell0.innerHTML = idLst[i];
+        }
+        cell1.innerHTML = typo2Lst[i];
+        cell2.innerHTML = '<span class='+ division2Lst[i]+ '>' + division2Lst[i] + '</span>';
+        cell3.innerHTML = spend2Lst[i];
+        cell4.innerHTML = tickets2Lst[i];
+        cell5.innerHTML = '<span class='+ division2Lst[i]+ '>' + totalTickets[i] + '</span>';
+        cell6.innerHTML = '<span class='+ division2Lst[i]+ '>' + prob2Lst[i] + '</span>';
+    }
+
+    if (idRedSorted.includes(yourId)) {
+        if (ticketsRedSorted[0] != 0) {
+            document.getElementById("player1").innerHTML = "If the number is between 1 and "+ticketsRedSorted[0]+", Player "+idRedSorted[0]+" wins";
+        } else {
+            document.getElementById("player1").innerHTML = "Player "+ idRedSorted[0] +" has no tickets"
+        }
+        if (ticketsRedSorted[1] != 0) {
+            document.getElementById("player2").innerHTML = "If the number is between "+redPlus+ " and {{ total_int_red }}, Player "+idRedSorted[1]+ " wins";
+        } else {
+            document.getElementById("player2").innerHTML = "Player "+ idRedSorted[1] +" has no tickets"
+        }
+
+    } else {
+        if (ticketsBlueSorted[0] != 0) {
+            document.getElementById("player1").innerHTML = "If the number is between 1 and "+ticketsBlueSorted[0]+", Player "+idBlueSorted[0]+" wins";
+        } else {
+            document.getElementById("player1").innerHTML = "Player "+ idBlueSorted[0] +" has no tickets"
+        }
+        if (ticketsBlueSorted[1] != 0) {
+            document.getElementById("player2").innerHTML = "If the number is between "+bluePlus+ " and {{ total_int_blue }}, Player " +idBlueSorted[1]+ " wins";
+        } else {
+            document.getElementById("player2").innerHTML = "Player "+ idBlueSorted[1] +" has no tickets"
+        }
+    }
+
+    document.getElementById("earning").style.display = 'none';
+    function showPayoff() {
+      var x = document.getElementById("earning");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } 
+    }
+</script>
+{% endblock %}
+
+

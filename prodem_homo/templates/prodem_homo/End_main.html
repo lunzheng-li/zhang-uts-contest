@@ -1,0 +1,27 @@
+{% extends "prodem_homo/css.html" %}
+{% load otree static %}
+
+{% block title %}
+Summary
+{% endblock %}
+
+{% block content %}
+<p>The following decision period was randomly selected for payout: <b>Period {{ paying_real_round }}</b>
+</p>
+
+In Period {{ paying_real_round }}, your earnings are:
+<ul>
+    <li>Stage 1: {{ player.payoff_final1 }} points </li>
+    <li>Stage 2: {{ player.payoff_final2 }} points </li>
+</ul>
+
+
+<p>
+Points will be converted to AUD at a rate of <b>10 Points to 1 AUD</b>. <br><br>
+
+Therefore, your earnings for now are <b>{{ payoff_in_AUD }} AUD</b>.
+</p>
+
+<br>
+      {% next_button %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "pooled_homo/css.html" %}
+{% load otree static %}
+
+
+{% block title %}
+    Questionnaire
+{% endblock %}
+
+{% block content %}
+
+    {% formfield player.age %}
+    {% formfield player.gender %}
+    {% formfield player.ethnicity %}
+    {% formfield player.major %}
+    {% formfield player.risk %}
+    {% formfield player.motivation %}
+
+    <div class="form-group">
+        <textarea class="form-control" rows="4" name="mot_openend"></textarea>
+    </div>
+    
+    {% next_button %}
+
+{% endblock %}

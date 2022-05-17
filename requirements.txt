@@ -3,3 +3,4 @@
 # otherwise, oTree will automatically overwrite it.
 otree>=3.2.3
 psycopg2>=2.8.4
+numpy>=1.21
